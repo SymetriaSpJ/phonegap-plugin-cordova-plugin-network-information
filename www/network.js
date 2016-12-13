@@ -41,7 +41,7 @@ function NetworkConnection() {
 /**
  * Get connection info
  */
-NetworkConnection.prototype.getInfo = function() {
+NetworkConnection.prototype.getInfo = function () {
     function successCallback(info) {
         this.type = info;
         if (info === "none") {
@@ -84,8 +84,6 @@ var timeout = 500;
 channel.createSticky('onCordovaConnectionReady');
 channel.waitForInitialization('onCordovaConnectionReady');
 
-channel.onCordovaReady.subscribe(function() {
-    me.getInfo();
-});
+channel.onCordovaReady.subscribe(me.getInfo);
 
 module.exports = me;
