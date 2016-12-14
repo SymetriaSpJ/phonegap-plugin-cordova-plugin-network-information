@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  *
-*/
+ */
 
 var exec = require('cordova/exec'),
     cordova = require('cordova'),
@@ -40,24 +40,10 @@ function NetworkConnection() {
 
 /**
  * Get connection info
- *
- * @param {Function} successCallback The function to call when the Connection data is available
- * @param {Function} errorCallback The function to call when there is an error getting the Connection data. (OPTIONAL)
  */
-NetworkConnection.prototype.getInfo = function(successCallback, errorCallback) {
-    exec(successCallback, errorCallback, "NetworkStatus", "getConnectionInfo", []);
-};
-
-var me = new NetworkConnection();
-var timerId = null;
-var timeout = 500;
-
-channel.createSticky('onCordovaConnectionReady');
-channel.waitForInitialization('onCordovaConnectionReady');
-
-channel.onCordovaReady.subscribe(function() {
-    me.getInfo(function(info) {
-        me.type = info;
+NetworkConnection.prototype.getInfo = function () {
+    function successCallback(info) {
+        this.type = info;
         if (info === "none") {
             // set a timer if still offline at the end of timer send the offline event
             timerId = setTimeout(function(){
@@ -77,15 +63,27 @@ channel.onCordovaReady.subscribe(function() {
         if (channel.onCordovaConnectionReady.state !== 2) {
             channel.onCordovaConnectionReady.fire();
         }
-    },
-    function (e) {
+    }
+
+    function errorCallback(e) {
         // If we can't get the network info we should still tell Cordova
         // to fire the deviceready event.
         if (channel.onCordovaConnectionReady.state !== 2) {
             channel.onCordovaConnectionReady.fire();
         }
         console.log("Error initializing Network Connection: " + e);
-    });
-});
+    }
+
+    exec(successCallback, errorCallback, "NetworkStatus", "getConnectionInfo", []);
+};
+
+var me = new NetworkConnection();
+var timerId = null;
+var timeout = 500;
+
+channel.createSticky('onCordovaConnectionReady');
+channel.waitForInitialization('onCordovaConnectionReady');
+
+channel.onCordovaReady.subscribe(me.getInfo);
 
 module.exports = me;
