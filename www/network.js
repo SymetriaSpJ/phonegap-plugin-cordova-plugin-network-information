@@ -43,16 +43,32 @@ function NetworkConnection() {
  */
 NetworkConnection.prototype.getInfo = function () {
     function successCallback(info) {
+
+        // console.log('CordovaPluginNetworkInformation: received status' +
+        //     ' current: ' + this.type + ' new: ' + info);
+
+        // on Samsung S4 the plugin returns the status twice in a row
+        if (this.type === info) {
+            // console.log('CordovaPluginNetworkInformation: duplicate prevented!');
+            return;
+        }
+
         this.type = info;
         if (info === "none") {
-            // set a timer if still offline at the end of timer send the offline event
-            timerId = setTimeout(function(){
-                cordova.fireDocumentEvent("offline");
-                timerId = null;
-            }, timeout);
+            if (timerId === null) {
+                // console.log('CordovaPluginNetworkInformation: scheduling offline timer...');
+                // set a timer if still offline at the end of timer send the offline event
+                timerId = setTimeout(function () {
+                    cordova.fireDocumentEvent("offline");
+                    timerId = null;
+                }, timeout);
+            } else {
+                // console.log('CordovaPluginNetworkInformation: offline timer already exists, ignoring status message.');
+            }
         } else {
             // If there is a current offline event pending clear it
             if (timerId !== null) {
+                // console.log('CordovaPluginNetworkInformation: very short internet shortage detected. Clearing offline timer.');
                 clearTimeout(timerId);
                 timerId = null;
             }
@@ -71,7 +87,7 @@ NetworkConnection.prototype.getInfo = function () {
         if (channel.onCordovaConnectionReady.state !== 2) {
             channel.onCordovaConnectionReady.fire();
         }
-        console.log("Error initializing Network Connection: " + e);
+        console.log("CordovaPluginNetworkInformation: Error initializing Network Connection: " + e);
     }
 
     exec(successCallback, errorCallback, "NetworkStatus", "getConnectionInfo", []);
