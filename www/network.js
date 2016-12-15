@@ -68,7 +68,7 @@ NetworkConnection.prototype.getInfo = function () {
         } else {
             // If there is a current offline event pending clear it
             if (timerId !== null) {
-                console.log('CordovaPluginNetworkInformation: very short internet shortage detected. Clearing offline timer.');
+                // console.log('CordovaPluginNetworkInformation: very short internet shortage detected. Clearing offline timer.');
                 clearTimeout(timerId);
                 timerId = null;
             }
