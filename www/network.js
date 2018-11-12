@@ -44,12 +44,12 @@ function NetworkConnection() {
 NetworkConnection.prototype.getInfo = function () {
     function successCallback(info) {
 
-        // console.log('CordovaPluginNetworkInformation: received status' +
-        //     ' current: ' + this.type + ' new: ' + info);
+         console.log('CordovaPluginNetworkInformation: received status' +
+             ' current: ' + this.type + ' new: ' + info);
 
         // on Samsung S4 the plugin returns the status twice in a row
         if (this.type === info) {
-            // console.log('CordovaPluginNetworkInformation: duplicate prevented!');
+             console.log('CordovaPluginNetworkInformation: duplicate prevented!');
             return;
         }
 
@@ -63,12 +63,12 @@ NetworkConnection.prototype.getInfo = function () {
                     timerId = null;
                 }, timeout);
             } else {
-                // console.log('CordovaPluginNetworkInformation: offline timer already exists, ignoring status message.');
+                 console.log('CordovaPluginNetworkInformation: offline timer already exists, ignoring status message.');
             }
         } else {
             // If there is a current offline event pending clear it
             if (timerId !== null) {
-                // console.log('CordovaPluginNetworkInformation: very short internet shortage detected. Clearing offline timer.');
+                 console.log('CordovaPluginNetworkInformation: very short internet shortage detected. Clearing offline timer.');
                 clearTimeout(timerId);
                 timerId = null;
             }
