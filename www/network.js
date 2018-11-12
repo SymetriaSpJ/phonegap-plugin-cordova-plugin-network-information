@@ -45,15 +45,15 @@ NetworkConnection.prototype.getInfo = function () {
     function successCallback(info) {
 
          console.log('CordovaPluginNetworkInformation: received status' +
-             ' current: ' + this.type + ' new: ' + info);
+             ' current: ' + me.type + ' new: ' + info);
 
         // on Samsung S4 the plugin returns the status twice in a row
-        if (this.type === info) {
+        if (me.type === info) {
              console.log('CordovaPluginNetworkInformation: duplicate prevented!');
             return;
         }
 
-        this.type = info;
+        me.type = info;
         if (info === "none") {
             if (timerId === null) {
                 // console.log('CordovaPluginNetworkInformation: scheduling offline timer...');
