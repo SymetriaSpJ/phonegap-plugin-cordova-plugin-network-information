@@ -22,7 +22,7 @@ var cordova = require('cordova'),
     proxy = require("cordova/exec/proxy"),
     Connection = require('./Connection');
 
-var type = navigator.onLine ? Connection.WIFI : Connection.NONE;
+var type = navigator.onLine ? Connection.UNKNOWN : Connection.NONE;
 
 // Subscribe to 'native' online/offline events
 function onStatusChange(evt) {
