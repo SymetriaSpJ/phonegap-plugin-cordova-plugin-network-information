@@ -21,9 +21,9 @@ description: Get information about wireless connectivity.
 #         under the License.
 -->
 
-|Android|iOS| Windows 8.1 Store | Windows 8.1 Phone | Windows 10 Store | Travis CI |
-|:-:|:-:|:-:|:-:|:-:|:-:|
-|[![Build Status](http://cordova-ci.cloudapp.net:8080/buildStatus/icon?job=cordova-periodic-build/PLATFORM=android,PLUGIN=cordova-plugin-network-information)](http://cordova-ci.cloudapp.net:8080/job/cordova-periodic-build/PLATFORM=android,PLUGIN=cordova-plugin-network-information/)|[![Build Status](http://cordova-ci.cloudapp.net:8080/buildStatus/icon?job=cordova-periodic-build/PLATFORM=ios,PLUGIN=cordova-plugin-network-information)](http://cordova-ci.cloudapp.net:8080/job/cordova-periodic-build/PLATFORM=ios,PLUGIN=cordova-plugin-network-information/)|[![Build Status](http://cordova-ci.cloudapp.net:8080/buildStatus/icon?job=cordova-periodic-build/PLATFORM=windows-8.1-store,PLUGIN=cordova-plugin-network-information)](http://cordova-ci.cloudapp.net:8080/job/cordova-periodic-build/PLATFORM=windows-8.1-store,PLUGIN=cordova-plugin-network-information/)|[![Build Status](http://cordova-ci.cloudapp.net:8080/buildStatus/icon?job=cordova-periodic-build/PLATFORM=windows-8.1-phone,PLUGIN=cordova-plugin-network-information)](http://cordova-ci.cloudapp.net:8080/job/cordova-periodic-build/PLATFORM=windows-8.1-phone,PLUGIN=cordova-plugin-network-information/)|[![Build Status](http://cordova-ci.cloudapp.net:8080/buildStatus/icon?job=cordova-periodic-build/PLATFORM=windows-10-store,PLUGIN=cordova-plugin-network-information)](http://cordova-ci.cloudapp.net:8080/job/cordova-periodic-build/PLATFORM=windows-10-store,PLUGIN=cordova-plugin-network-information/)|[![Build Status](https://travis-ci.org/apache/cordova-plugin-network-information.svg?branch=master)](https://travis-ci.org/apache/cordova-plugin-network-information)|
+|AppVeyor|Travis CI|
+|:-:|:-:|
+|[![Build status](https://ci.appveyor.com/api/projects/status/github/apache/cordova-plugin-network-information?branch=master)](https://ci.appveyor.com/project/ApacheSoftwareFoundation/cordova-plugin-network-information)|[![Build Status](https://travis-ci.org/apache/cordova-plugin-network-information.svg?branch=master)](https://travis-ci.org/apache/cordova-plugin-network-information)|
 
 # cordova-plugin-network-information
 
@@ -35,25 +35,16 @@ wifi connection, and whether the device has an internet connection.
 
 > To get a few ideas how to use the plugin, check out the [sample](#sample) at the bottom of this page or go straight to the [reference](#reference) content.
 
-Report issues with this plugin on the [Apache Cordova issue tracker][Apache Cordova issue tracker].
-
-##<a name="reference"></a>Reference
-
 ## Installation
 
     cordova plugin add cordova-plugin-network-information
 
 ## Supported Platforms
 
-- Amazon Fire OS
 - Android
-- BlackBerry 10
 - Browser
 - iOS
-- Windows Phone 7 and 8
-- Tizen
 - Windows
-- Firefox OS
 
 # Connection
 
@@ -114,26 +105,9 @@ eventually be removed.
 - <iOS7 can't detect the type of cellular network connection.
     - `navigator.connection.type` is set to `Connection.CELL` for all cellular data.
 
-### Windows Phone Quirks
-
-- When running in the emulator, always detects `navigator.connection.type` as `Connection.UNKNOWN`.
-
-- Windows Phone can't detect the type of cellular network connection.
-    - `navigator.connection.type` is set to `Connection.CELL` for all cellular data.
-
 ### Windows Quirks
 
 - When running in the Phone 8.1 emulator, always detects `navigator.connection.type` as `Connection.ETHERNET`.
-
-### Tizen Quirks
-
-- Tizen can only detect a WiFi or cellular connection.
-    - `navigator.connection.type` is set to `Connection.CELL_2G` for all cellular data.
-
-### Firefox OS Quirks
-
-- Firefox OS can't detect the type of cellular network connection.
-    - `navigator.connection.type` is set to `Connection.CELL` for all cellular data.
 
 ### Browser Quirks
 
@@ -173,14 +147,6 @@ function onOffline() {
 
 During initial startup, the first offline event (if applicable) takes at least a second to fire.
 
-### Windows Phone 7 Quirks
-
-When running in the Emulator, the `connection.status` is always unknown, so this event does _not_ fire.
-
-### Windows Phone 8 Quirks
-
-The Emulator reports the connection type as `Cellular`, which does not change, so the event does _not_ fire.
-
 ## online
 
 This event fires when an application goes online, and the device
@@ -214,14 +180,6 @@ function onOnline() {
 During initial startup, the first `online` event (if applicable) takes
 at least a second to fire, prior to which `connection.type` is
 `UNKNOWN`.
-
-### Windows Phone 7 Quirks
-
-When running in the Emulator, the `connection.status` is always unknown, so this event does _not_ fire.
-
-### Windows Phone 8 Quirks
-
-The Emulator reports the connection type as `Cellular`, which does not change, so events does _not_ fire.
 
 ## Sample: Upload a File Depending on your Network State <a name="sample"></a>
 
